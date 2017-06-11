@@ -14,6 +14,7 @@ USER jboss
 RUN cd /opt/jboss/ && curl -L https://downloads.jboss.org/keycloak/$KEYCLOAK_VERSION/keycloak-$KEYCLOAK_VERSION.tar.gz | tar zx && mv /opt/jboss/keycloak-$KEYCLOAK_VERSION /opt/jboss/keycloak
 
 ADD docker-entrypoint.sh /opt/jboss/
+RUN chmod 755 /opt/jboss/docker-entrypoint.sh
 
 ADD setLogLevel.xsl /opt/jboss/keycloak/
 RUN java -jar /usr/share/java/saxon.jar -s:/opt/jboss/keycloak/standalone/configuration/standalone.xml -xsl:/opt/jboss/keycloak/setLogLevel.xsl -o:/opt/jboss/keycloak/standalone/configuration/standalone.xml
@@ -26,7 +27,6 @@ RUN sed -i -e 's/<http-listener /& proxy-address-forwarding="${env.PROXY_ADDRESS
 
 EXPOSE 8080
 
-RUN ["chmod", "+x", "/opt/jboss/docker-entrypoint.sh"]
 ENTRYPOINT [ "/opt/jboss/docker-entrypoint.sh" ]
 
 CMD ["-b", "0.0.0.0"]
