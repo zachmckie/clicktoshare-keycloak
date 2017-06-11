@@ -25,11 +25,22 @@ RUN java -jar /usr/share/java/saxon.jar -s:/opt/jboss/keycloak/standalone/config
 
 ENV JBOSS_HOME /opt/jboss/keycloak
 
+#Enable MySQL and HTTPS/SSL
+COPY keycloak.jks $JBOSS_HOME/standalone/configuration
+COPY standalone.xml $JBOSS_HOME/standalone/configuration
+RUN mkdir -p $JBOSS_HOME/modules/system/layers/base/com/mysql/jdbc/main; cd $JBOSS_HOME/modules/system/layers/base/com/mysql/jdbc/main && curl -O http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.18/mysql-connector-java-5.1.18.jar
+COPY module.xml $JBOSS_HOME/modules/system/layers/base/com/mysql/jdbc/main/
+
 #Enabling Proxy address forwarding so we can correctly handle SSL termination in front ends
 #such as an OpenShift Router or Apache Proxy
 RUN sed -i -e 's/<http-listener /& proxy-address-forwarding="${env.PROXY_ADDRESS_FORWARDING}" /' $JBOSS_HOME/standalone/configuration/standalone.xml
+RUN sed -i -e 's/<https-listener /& proxy-address-forwarding="${env.PROXY_ADDRESS_FORWARDING}" /' $JBOSS_HOME/standalone/configuration/standalone.xml
 
-EXPOSE 8080
+#Expose HTTP Port
+#EXPOSE 8080
+
+#Expose HTTPS Port
+EXPOSE 8443
 
 ENTRYPOINT [ "/opt/jboss/docker-entrypoint.sh" ]
 
