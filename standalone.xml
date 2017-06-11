@@ -396,13 +396,8 @@
         <subsystem xmlns="urn:jboss:domain:undertow:3.0">
             <buffer-cache name="default"/>
             <server name="default-server">
-                <http-listener name="default"
-                           proxy-address-forwarding="${env.PROXY_ADDRESS_FORWARDING}"
-                           socket-binding="http"
-                           redirect-socket="https"/>
-                <https-listener name="https"
-                                socket-binding="https"
-                                security-realm="ApplicationRealm"/>
+                <http-listener name="default" socket-binding="http" redirect-socket="https"/>
+                <https-listener name="https" socket-binding="https" security-realm="ApplicationRealm"/>
                 <host name="default-host" alias="localhost">
                     <location name="/" handler="welcome-content"/>
                     <filter-ref name="server-header"/>
