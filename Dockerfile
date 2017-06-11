@@ -15,6 +15,7 @@ RUN cd /opt/jboss/ && curl -L https://downloads.jboss.org/keycloak/$KEYCLOAK_VER
 
 COPY docker-entrypoint.sh /opt/jboss/
 
+#Ensure docker-entrypoint.sh is executable
 USER root
 RUN chmod 755 /opt/jboss/docker-entrypoint.sh
 USER jboss
