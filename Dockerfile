@@ -18,10 +18,6 @@ COPY docker-entrypoint.sh /opt/jboss/
 USER root
 #Ensure docker-entrypoint.sh is executable
 RUN chmod 755 /opt/jboss/docker-entrypoint.sh
-
-#Give correct permissions when used in an OpenShift environment.
-RUN chown -R jboss:0 $JBOSS_HOME/standalone && \
-    chmod -R g+rw $JBOSS_HOME/standalone
 USER jboss
 
 ADD setLogLevel.xsl /opt/jboss/keycloak/
@@ -38,3 +34,9 @@ EXPOSE 8080
 ENTRYPOINT [ "/opt/jboss/docker-entrypoint.sh" ]
 
 CMD ["-b", "0.0.0.0"]
+
+USER root
+#Give correct permissions when used in an OpenShift environment.
+RUN chown -R jboss:0 $JBOSS_HOME/standalone && \
+    chmod -R g+rw $JBOSS_HOME/standalone
+USER jboss
