@@ -26,6 +26,7 @@ RUN sed -i -e 's/<http-listener /& proxy-address-forwarding="${env.PROXY_ADDRESS
 
 EXPOSE 8080
 
+RUN chmod +x /opt/jboss/docker-entrypoint.sh
 ENTRYPOINT [ "/opt/jboss/docker-entrypoint.sh" ]
 
 CMD ["-b", "0.0.0.0"]
