@@ -32,7 +32,7 @@ RUN mkdir -p $JBOSS_HOME/modules/system/layers/base/com/mysql/jdbc/main; cd $JBO
 COPY module.xml $JBOSS_HOME/modules/system/layers/base/com/mysql/jdbc/main/
 
 #Expose HTTP Port
-#EXPOSE 8080
+EXPOSE 8080
 
 #Expose HTTPS Port
 EXPOSE 8443
