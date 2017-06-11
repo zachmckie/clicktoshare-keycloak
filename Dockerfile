@@ -15,11 +15,14 @@ RUN cd /opt/jboss/ && curl -L https://downloads.jboss.org/keycloak/$KEYCLOAK_VER
 
 COPY docker-entrypoint.sh /opt/jboss/
 
-#Ensure docker-entrypoint.sh is executable
 USER root
+#Ensure docker-entrypoint.sh is executable
 RUN chmod 755 /opt/jboss/docker-entrypoint.sh
-USER jboss
 
+#Give correct permissions when used in an OpenShift environment.
+RUN chown -R jboss:0 $JBOSS_HOME/standalone && \
+    chmod -R g+rw $JBOSS_HOME/standalone
+USER jboss
 
 ADD setLogLevel.xsl /opt/jboss/keycloak/
 RUN java -jar /usr/share/java/saxon.jar -s:/opt/jboss/keycloak/standalone/configuration/standalone.xml -xsl:/opt/jboss/keycloak/setLogLevel.xsl -o:/opt/jboss/keycloak/standalone/configuration/standalone.xml
