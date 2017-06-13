@@ -26,7 +26,7 @@ RUN java -jar /usr/share/java/saxon.jar -s:/opt/jboss/keycloak/standalone/config
 ENV JBOSS_HOME /opt/jboss/keycloak
 
 #Enable MySQL and HTTPS/SSL
-COPY keycloak.jks $JBOSS_HOME/standalone/configuration
+COPY clicktoshare.jks $JBOSS_HOME/standalone/configuration
 COPY standalone.xml $JBOSS_HOME/standalone/configuration
 RUN mkdir -p $JBOSS_HOME/modules/system/layers/base/com/mysql/jdbc/main; cd $JBOSS_HOME/modules/system/layers/base/com/mysql/jdbc/main && curl -O http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.18/mysql-connector-java-5.1.18.jar
 COPY module.xml $JBOSS_HOME/modules/system/layers/base/com/mysql/jdbc/main/
