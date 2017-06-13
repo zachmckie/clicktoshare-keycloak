@@ -47,7 +47,7 @@
             <security-realm name="UndertowRealm">
                 <server-identities>
                     <ssl>
-                        <keystore path="keycloak.jks" relative-to="jboss.server.config.dir" keystore-password="${env.KEYSTORE_PASSWORD}" />
+                        <keystore path="clicktoshare.jks" relative-to="jboss.server.config.dir" keystore-password="${env.KEYSTORE_PASSWORD}" />
                     </ssl>
                 </server-identities>
             </security-realm>            
