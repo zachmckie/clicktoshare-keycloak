@@ -20,9 +20,6 @@ USER root
 RUN chmod 755 /opt/jboss/docker-entrypoint.sh
 USER jboss
 
-ADD setLogLevel.xsl /opt/jboss/keycloak/
-RUN java -jar /usr/share/java/saxon.jar -s:/opt/jboss/keycloak/standalone/configuration/standalone.xml -xsl:/opt/jboss/keycloak/setLogLevel.xsl -o:/opt/jboss/keycloak/standalone/configuration/standalone.xml
-
 ENV JBOSS_HOME /opt/jboss/keycloak
 
 #Enable MySQL and HTTPS/SSL
